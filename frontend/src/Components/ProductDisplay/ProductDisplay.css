@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+  .but{
+    justify-content: space-between;
+  }
+}
+@media (max-width: 425px) {
+  .but {
+    flex-direction: column;
+  }
+}

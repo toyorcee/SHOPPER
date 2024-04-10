@@ -1,0 +1,88 @@
+.breadcrum {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5e5e5e;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 60px 170px;
+  text-transform: capitalize;
+}
+
+/* @media (max-width: 900px) and (min-width: 769px) {
+  .breadcrum {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #5e5e5e;
+    font-size: 10px;
+    font-weight: 600;
+    margin: 40px 10px;
+    text-transform: capitalize;
+  }
+}
+@media (max-width: 768px) and (min-width: 351px) {
+  .breadcrum {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #5e5e5e;
+    font-size: 10px;
+    font-weight: 600;
+    margin: 40px 10px;
+    text-transform: capitalize;
+  }
+} */
+@media (max-width: 768px) {
+  .breadcrum {
+    display: flex;
+    align-items: start;
+    gap: 6px;
+    color: #5e5e5e;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 10px 120px;
+    text-transform: capitalize;
+  }
+  .breadcrum img {
+    height: 6px;
+    width: 6px;
+    margin-top: 6px;
+  }
+}
+@media (max-width: 425px) and (min-width: 321px) {
+  .breadcrum {
+    display: flex;
+    align-items: start;
+    gap: 3px;
+    color: #5e5e5e;
+    font-size: 9px;
+    font-weight: 550;
+    margin-top: 55px;
+    margin-left: 30px;
+    margin-right: 30px;
+    text-transform: capitalize;
+  }
+  .breadcrum img {
+    height: 6px;
+    width: 6px;
+    margin-top: 3px;
+  }
+}
+@media (max-width: 320px) and (min-width: 1px) {
+  .breadcrum {
+    display: flex;
+    align-items: start;
+    gap: 2.5px;
+    color: #5e5e5e;
+    font-size: 8px;
+    font-weight: 550;
+    margin: 3px 35px;
+    text-transform: capitalize;
+  }
+  .breadcrum img {
+    height: 6px;
+    width: 6px;
+    margin-top: 3px;
+  }
+}

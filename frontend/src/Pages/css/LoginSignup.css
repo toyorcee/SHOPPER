@@ -1,0 +1,18 @@
+.fab {
+  color: blue;
+}
+
+.log {
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.log p {
+  font-weight: 600;
+}
+
+.login {
+  margin: auto;
+  margin-top: 150px;
+}
