@@ -1,108 +1,397 @@
-.new-collections {
+
+============================================================food details==================================================================================
+
+import React from "react";
+import "./FoodDetails.css";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { addProduct } from "../../redux/cartSlice";
+
+const FoodDetails = () => {
+  const [foodDetails, setFoodsDetails] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { token } = useSelector((state) => state.auth);
+  const { products } = useSelector((state) => state.cart);
+  console.log(products);
+
+  useEffect(() => {
+    const fetchFoodDetails = async () => {
+      const res = await fetch(`http://localhost:4000/product/find/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      setFoodsDetails(data);
+    };
+    fetchFoodDetails();
+  }, [id]);
+
+  const changeQuantity = (command) => {
+    if (command === "dec") {
+      if (quantity === 1) return;
+      setQuantity((prev) => prev - 1);
+    } else if (command === "inc") {
+      setQuantity((prev) => prev + 1);
+    }
+  };
+
+  const addToCart = () => {
+    dispatch(addProduct({ ...foodDetails, quantity }));
+  };
+
+  return (
+    <div className="fdcontainer">
+      <div className="fdwrapper">
+        <div className="fdleft">
+          <img src={`http://localhost:4000/images/${foodDetails?.img}`} alt="" />
+        </div>
+        <div className="fdright">
+          <h2 className="fdtitle">{foodDetails?.title}</h2>
+          <div className="fdprice">
+            Price: <span>$</span> {foodDetails?.price}
+          </div>
+          <div className="fdquantity">
+            <button
+              disabled={quantity === 1}
+              onClick={() => changeQuantity("dec")}
+            >
+              -
+            </button>
+            <span className="quantityNumber">{quantity}</span>
+            <button onClick={() => changeQuantity("inc")}>+</button>
+          </div>
+          <div className="fdcategory">
+            <h3>Category: </h3>
+            <span className="categoryName">
+              {foodDetails?.category}
+            </span>
+          </div>
+          <div className="fdproductDesc">
+            <div>Description: </div>
+            <p>
+              {foodDetails?.desc?.length > 50
+                ? `${foodDetails?.desc}`.slice(0, 50)
+                : foodDetails?.desc}
+            </p>
+          </div>
+          <button onClick={addToCart} className="addToCart">
+            Add To Cart <AiOutlineShoppingCart />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FoodDetails;
+======================================================================================food details css============================================================
+.fdcontainer {
+  height: 100%;
+  width: 100%;
+  margin-top: 7rem;
+}
+
+.fdwrapper {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 125px;
+}
+
+/* left */
+.fdleft {
+  width: 50%;
+  height: 100%;
+}
+
+.fdleft > img {
+  height: 625px;
+  width: 625px;
+  object-fit: cover;
+}
+
+/* right */
+.fdright {
+  width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: auto;
+  margin-top: 1.5rem;
+}
+
+.fdtitle {
+  font-size: 34px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  text-transform: capitalize;
+}
+
+.fdquantity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 20px;
+}
+
+.fdquantity > button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #333;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.fdquantity > button:disabled {
+  background-color: #999;
+  color: #ede8e8;
+  cursor: not-allowed;
+}
+
+.fdquantity > .quantityNumber {
+  padding: 0;
+  border: none;
+  cursor: default;
+}
+
+.fdquantity > button:hover {
+  background-color: #e0d8d8;
+}
+
+.fdproductDesc {
+  margin-top: 40px;
+}
+
+.fdproductDesc > div {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.fdproductDesc > p {
+  color: #555;
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.fdcategory {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 30px 0;
+}
+
+.fdcategory > h3 {
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.fdcategory > .categoryName {
+  padding: 0.5rem 1.5rem;
+  background-color: #f00;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-size: 18px;
+  text-transform: capitalize;
+}
+
+.fdcategory > .categoryName:hover {
+  border-color: #f00;
+  background-color: #fff;
+  color: #f00;
+}
+
+.fdprice {
+  font-size: 28px;
+  color: #f00;
+}
+
+.fdprice > span {
+  font-size: 24px;
+}
+
+.addToCart {
+  outline: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 1.5rem;
+  margin-top: 2rem;
+  background-color: #f00;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 20px;
+  display: flex;
   align-items: center;
   gap: 10px;
-  margin: 175px 0px;
+  border: 1px solid transparent;
+  cursor: pointer;
 }
 
-.new-collections h1 {
-  color: #171717;
-  font-size: 50px;
-  font-weight: 600;
+.addToCart:hover {
+  border-color: #f00;
+  color: #f00;
+  background-color: #fff;
 }
 
-.new-collections hr {
-  width: 200px;
-  height: 6px;
-  border-radius: 10px;
-  background: #252525;
+======================================================================================food catalog===================================================================
+import React from "react";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import "./FoodCatalog.css";
+import { useEffect } from "react";
+
+const FoodCatalog = () => {
+  const [filteredFoods, setFilteredFoods] = useState([]);
+  const location = useLocation();
+  const foodEndpoint = location.pathname.split("/")[2];
+  const { token } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const fetchFoodType = async () => {
+      const res = await fetch(
+        `http://localhost:4000/product?category=${foodEndpoint}`,
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+      setFilteredFoods(data);
+    };
+    fetchFoodType();
+  }, [foodEndpoint]);
+
+  return (
+    <div className="fccontainer">
+      <div className="fcwrapper">
+        {filteredFoods?.length !== 0 && (
+          <h2 className="fctitle">
+            The best {foodEndpoint} in the region
+          </h2>
+        )}
+        <div className="fcfoods">
+          {filteredFoods.length !== 0 ? (
+            filteredFoods.map((f) => (
+              <Link to={`/food/${f._id}`} key={f._id} className="fcfood">
+                <div className="fcimgContainer">
+                  <img
+                    src={`http://localhost:4000/images/${f?.img}`}
+                    className="foodImg"
+                  />
+                </div>
+                <div className="fcfoodDetails">
+                  <h4 className="fcfoodTitle">{f?.title}</h4>
+                  <span className="fcprice">
+                    <span>$</span> {f?.price}
+                  </span>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <h1 className="fcnoQuantity">No {foodEndpoint} right now</h1>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FoodCatalog;
+=============================================================================================foodcatalog css=========================================================
+.fccontainer {
+  height: 100%;
+  width: 100%;
+  margin-top: 5rem;
 }
 
-.collections {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  margin-top: 50px;
-  gap: 10px;
+.fcwrapper {
+  width: 85%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.item {
-  margin: 50px 0px;
-  height: auto;
+.fctitle {
+  margin-bottom: 5rem;
+  font-size: 36px;
+  color: #f00;
 }
 
-@media (max-width: 1280px) {
-  .new-collections h1 {
-    font-size: 40px;
-  }
-  .new-collections hr {
-    width: 160px;
-    height: 4px;
-  }
-  .collections {
-    gap: 10px;
-    margin-top: 30px;
-  }
+.fcfoods {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 75px;
 }
 
-@media (max-width: 1024px) {
-  .new-collections h1 {
-    font-size: 30px;
-  }
-  .new-collections hr {
-    width: 120px;
-    height: 3px;
-  }
-  .collections {
-    gap: 8px;
-    margin-top: 20px;
-  }
+.fcfood {
+  text-decoration: none;
+  color: inherit;
 }
 
-@media (max-width: 800px) {
-  .new-collections {
-    gap: 6px;
-  }
-  .new-collections h1 {
-    font-size: 20px;
-  }
-  .new-collections hr {
-    width: 100px;
-  }
-  .collections {
-    gap: 5px;
-  }
-}
-@media (max-width: 425px) {
-  .new-collections {
-    margin-top: 30px;
-  }
-  .new-collections h1 {
-    font-size: 20px;
-  }
-  .new-collections hr {
-    width: 60px;
-  }
-  .collections {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
+.fcimgContainer {
+  width: 450px;
+  height: 350px;
+  overflow: hidden;
 }
 
-@media (max-width: 320px) {
-  .new-collections {
-    margin-top: 20px;
-  }
-  .new-collections h1 {
-    font-size: 13px;
-  }
-  .new-collections hr {
-    width: 60px;
-  }
-  .collections {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 7px;
-  }
+.fcimgContainer > img {
+  transition: 250ms all;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fcimgContainer > img:hover {
+  scale: 1.1;
+}
+
+.fcfoodDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+  margin-top: 20px;
+}
+
+.fcfoodTitle {
+  font-size: 24px;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.fcprice {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.fcprice > span {
+  font-size: 20px;
+  color: #f00;
+}
+
+.fcnoQuantity {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-weight: bold;
+  font-size: 40px;
+  margin-bottom: 12.5rem;
 }

@@ -17,7 +17,7 @@ const LoginPageMain = () => {
   const login = async () => {
     console.log("Login function executed",formData);
     let responseData;
-    await fetch("http://localhost:4000/login", {
+    await fetch("https://shopper-kl9l.onrender.com/login", {
       method: "POST",
       headers: {
         Accept: "application/form-data",
