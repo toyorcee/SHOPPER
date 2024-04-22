@@ -17,7 +17,7 @@ const LoginSignup = () => {
   const signup = async () => {
     console.log("Signup function executed", formData);
     let responseData;
-    await fetch("https://shopper-kl9l.onrender.com/signup", {
+    await fetch("http://localhost:4000/signup", {
       method: "POST",
       headers: {
         Accept: "application/form-data",
