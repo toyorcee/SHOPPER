@@ -11,7 +11,6 @@ app.use(express.json());
 app.use(cors());
 app.use("/images", express.static("upload/images"));
 
-
 //Database Connection with Mongo
 
 mongoose.connect(

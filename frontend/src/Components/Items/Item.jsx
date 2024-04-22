@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Item = (props) => {
   return (
-    <div className="item w-full h-full mt-5">
+    <div className="item w-full h-full mt-5 my-15">
       <Link to={`/product/${props.id}`}>
         <img
           className="object-cover object-center w-full h-full block"
@@ -13,7 +13,7 @@ const Item = (props) => {
           alt=""
         />
       </Link>
-      <div className="details mt-5">
+      <div className="details">
         <p>{props.name}</p>
         <div className="item-prices">
           <div className="item-price-new">${props.new_price}</div>

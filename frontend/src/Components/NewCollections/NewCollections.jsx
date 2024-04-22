@@ -14,7 +14,7 @@ const NewCollections = () => {
     <div className="new-collections">
       <h1>NEW COLLECTIONS</h1>
       <hr />
-      <div className="collections">
+      <div className="collections-item grid grid-cols-2 gap-1">
         {new_collection.map((item, i) => {
           return (
             <Item

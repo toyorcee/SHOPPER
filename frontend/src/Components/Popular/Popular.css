@@ -62,9 +62,6 @@
   .popular hr {
     width: 100px;
   }
-  /* .popular-item {
-    gap: 5px;
-  } */
 }
 @media (max-width: 425px) and (min-width: 321px) {
   .popular-item {

@@ -15,7 +15,7 @@ const LoginPageMain = () => {
   };
 
   const login = async () => {
-    console.log("Login function executed",formData);
+    console.log("Login function executed", formData);
     let responseData;
     await fetch("https://shopper-kl9l.onrender.com/login", {
       method: "POST",
@@ -31,9 +31,8 @@ const LoginPageMain = () => {
     if (responseData.success) {
       localStorage.setItem("auth-token", responseData.token);
       window.location.replace("/");
-    }
-    else{
-      alert(responseData.errors)
+    } else {
+      alert(responseData.errors);
     }
   };
 
